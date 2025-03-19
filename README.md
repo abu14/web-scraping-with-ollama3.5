@@ -8,7 +8,7 @@
 
 🌟I built a web scraping tool powered by ***Selenium , BeautifulSoup , and Ollama 3.5*** . The tool extracts structured data from websites and uses an AI language model to parse and extract specific information based on user input.
 
-> Please Note: This project is designed for educational purposes only. Web scraping might be against the terms of service agreement for some websites. Thus, ensure compliance with website terms of service when scraping.
+> Please Note: Web scraping might be against the terms of service agreement for some websites. Thus, ensure compliance with website terms of service when scraping.
 
 ### ✨ **Features**
   * Extracts raw HTML content from any website using ***Selenium***.
@@ -55,13 +55,13 @@ Follow these steps to set up and run the project:
 5. Results:
 The app will display the extracted DOM content and parsed results based on your description.
 
-#### **Sample Output**
 
 
 ### 🔧 **Code Snippets**
 
 #### **Scraping Website Content**
 > The ```scrape_website``` function uses Selenium to load the webpage and extract its HTML content.
+
   ```python
  from selenium import webdriver
  from selenium.webdriver.chrome.service import Service
