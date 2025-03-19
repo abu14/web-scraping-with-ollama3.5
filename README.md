@@ -56,28 +56,84 @@ Follow these steps to set up and run the project:
 5. Results:
 The app will display the extracted DOM content and parsed results based on your description.
 
-### 🔧 **Code Snippet**
-Here are some key parts of the code to help you understand how the project works:
+#### **Sample Output**
 
-    ```python
-      from selenium import webdriver
-      from selenium.webdriver.chrome.service import Service
-      
-      def scrape_website(url):
-          print("Launching Chrome browser...")
-          chrome_driver_path = "./chromedriver.exe"
-          options = webdriver.ChromeOptions()
-          driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
-          try:
-              driver.get(url)
-              print("Loading the website...")
-              time.sleep(3)  # Wait for the page to load
-              return driver.page_source
-          finally:
-              driver.quit()
+
+### 🔧 **Code Snippets**
+
+#### **Scraping Website Content**
+> The ```scrape_website``` function uses Selenium to load the webpage and extract its HTML content.
+  ```python
+ from selenium import webdriver
+ from selenium.webdriver.chrome.service import Service
+ 
+ def scrape_website(url):
+     print("Launching Chrome browser...")
+     chrome_driver_path = "./chromedriver.exe"
+     options = webdriver.ChromeOptions()
+     driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
+     try:
+         driver.get(url)
+         print("Loading the website...")
+         time.sleep(3)  # Wait for the page to load
+         return driver.page_source
+     finally:
+         driver.quit()
+   ```
+
+
+#### **Cleaning DOM Content**
+> The ```clean_body_content``` function removes unnecessary tags and formats the text for readability.
+
+  ```python
+  from bs4 import BeautifulSoup
   
-    ```
+  def clean_body_content(body_content):
+      soup = BeautifulSoup(body_content, 'html.parser')
+      for script_or_style in soup(["script", "style"]):
+          script_or_style.extract()
+      cleaned_content = soup.get_text(separator="\n")
+      cleaned_content = '\n'.join(line.strip() for line in cleaned_content.splitlines() if line.strip())
+      return cleaned_content
+   ```
+
+#### **Parsing with Ollama**
+> The ```parse_with_ollama``` function uses Ollama 3.5 to extract specific information from the DOM content.
+
+```python
+ from langchain_ollama import OllamaLLM
+ from langchain_core.prompts import ChatPromptTemplate
+ 
+ template = (
+     "Extract specific information from the following text: {dom_content}. "
+     "Instructions: {parse_description}. Return only the requested data."
+ )
+ 
+ model = OllamaLLM(model='llama3')
+ 
+ def parse_with_ollama(dom_chunks, parse_description):
+     prompt = ChatPromptTemplate.from_template(template)
+     chain = prompt | model
+     parse_content = []
+     for chunk in dom_chunks:
+         response = chain.invoke({'dom_content': chunk, 'parse_description': parse_description})
+         parse_content.append(response)
+     return "\n".join(parse_content)
+
+```
 
 
 
+### 📝 **License**
 
+This project is licensed under the MIT License.  See [LICENSE](./LICENSE) file for more details.
+  
+
+<!-- CONTACT -->
+### **Contact**
+
+##### Abenezer Tesfaye
+
+⭐️ Email - tesfayeabenezer64@gmail.com
+ 
+Project Link: [Github Repo](https://github.com/abu14/web-scraping-with-ollama3.5)
