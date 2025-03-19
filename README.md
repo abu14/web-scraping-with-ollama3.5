@@ -2,7 +2,6 @@
 
 ![GitHub contributors](https://img.shields.io/github/contributors/abu14/web-scraping-with-ollama3.5)
 ![GitHub forks](https://img.shields.io/github/forks/abu14/web-scraping-with-ollama3.5)
-![GitHub stars](https://img.shields.io/github/stars/abu14/wweb-scraping-with-ollama3.5)
 ![GitHub issues](https://img.shields.io/github/issues/abu14/web-scraping-with-ollama3.5)
 ![GitHub license](https://img.shields.io/github/license/abu14/web-scraping-with-ollama3.5)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/abenezer-tesfaye-191579214/)
@@ -103,10 +102,15 @@ The app will display the extracted DOM content and parsed results based on your 
 ```python
  from langchain_ollama import OllamaLLM
  from langchain_core.prompts import ChatPromptTemplate
- 
+
+ #instruction to the llm model to follow when answering the prompt frm user
  template = (
-     "Extract specific information from the following text: {dom_content}. "
-     "Instructions: {parse_description}. Return only the requested data."
+    "You are tasked with extracting specific information from the following text content: {dom_content}. "
+    "Please follow these instructions carefully: \n\n"
+    "1. **Extract Information:** Only extract the information that directly matches the provided description: {parse_description}. "
+    "2. **No Extra Content:** Do not include any additional text, comments, or explanations in your response. "
+    "3. **Empty Response:** If no information matches the description, return an empty string ('')."
+    "4. **Direct Data Only:** Your output should contain only the data that is explicitly requested, with no other text."
  )
  
  model = OllamaLLM(model='llama3')
@@ -128,9 +132,10 @@ The app will display the extracted DOM content and parsed results based on your 
 
 This project is licensed under the MIT License.  See [LICENSE](./LICENSE) file for more details.
   
+<br>
 
 <!-- CONTACT -->
-### **Contact**
+### 💬 **Contact**
 
 ##### Abenezer Tesfaye
 
